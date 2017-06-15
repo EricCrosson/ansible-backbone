@@ -1,5 +1,5 @@
 FROM hamroctopus/ansible:1.0.0
-MAINTAINER <%= name %> <<%= email %>>
+MAINTAINER <%= author %> <<%= email %>>
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -23,6 +23,6 @@ ENTRYPOINT []
 ARG VERSION
 ARG RELEASE_DATE
 
-LABEL vendor="<%= name %>" \
+LABEL vendor="<%= author %>" \
 version="${VERSION}" \
 release_date="${RELEASE_DATE}"

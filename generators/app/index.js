@@ -1,21 +1,63 @@
 const sh = require('shelljs');
 const Generator = require('yeoman-generator');
 const _ = require('lodash');
+const os = require('os');
+const moment = require('moment');
+const path = require('path');
 
 module.exports = class extends Generator {};
 
-const projectName = sh.pwd().stdout;
+const date = new Date();
+const formattedDate = moment(date).format('YYYY-MM-DD');
+
+var input;
 
 module.exports = class extends Generator {
+    prompting() {
+        return this.prompt([{
+            type: 'input',
+            name: 'name',
+            message: 'Your project name',
+            default: path.basename(this.appname)  // defaults to current folder name
+        }, {
+            type: 'input',
+            name: 'tagline',
+            message: 'Your project tagline',
+            default: 'Clean and fresh sentence fragment'
+        }, {
+            type: 'input',
+            name: 'git_repository',
+            message: 'Your hosted git repository',
+            default: `https://github.com/${os.userInfo().username}/${this.appname}`
+        }, {
+            type: 'input',
+            name: 'author',
+            message: 'Your name',
+            default: os.userInfo().username
+        }, {
+            type: 'input',
+            name: 'dockername',
+            message: 'Your dockerhub username',
+            default: os.userInfo().username
+        }, {
+            type: 'input',
+            name: 'email',
+            message: 'Your email address',
+            default: `${os.userInfo().username}@gmail.com`
+        }]).then((answers) => {
+            input = answers;
+        })
+    }
+
     createReadme() {
         this.fs.copyTpl(
             this.templatePath('readme.md'),
             this.destinationPath('readme.md'),
             {
-                name: projectName,
-                tagline: 'TODO: write tagline',
-                author: 'Eric Crosson',
-                git_repository: 'https://github.com/ericcrosson/something'
+                name: input.name,
+                tagline: input.tagline,
+                author: input.author,
+                git_repository: input.git_repository
             }
         );
     }
@@ -24,9 +66,9 @@ module.exports = class extends Generator {
             this.templatePath('Dockerfile'),
             this.destinationPath('Dockerfile'),
             {
-                name: projectName,
-                email: 'esc@ericcrosson.com',
-                date: 'dateme'
+                author: input.author,
+                email: input.email,
+                date: formattedDate
             }
         );
     };
@@ -35,9 +77,9 @@ module.exports = class extends Generator {
             this.templatePath('site.yml'),
             this.destinationPath('site.yml'),
             {
-                name: projectName,
-                author: 'Eric Crosson',
-                date: 'dateme'
+                name: input.name,
+                author: input.author,
+                date: formattedDate
             }
         );
     };
@@ -46,8 +88,8 @@ module.exports = class extends Generator {
             this.templatePath('tag'),
             this.destinationPath('tag'),
             {
-                dockername: 'hamroctopus',
-                name: projectName,
+                dockername: input.dockername,
+                name: input.name,
             }
         );
     };
@@ -62,8 +104,8 @@ module.exports = class extends Generator {
             this.templatePath('bin/apply'),
             this.destinationPath('bin/apply'),
             {
-                author: 'Eric Crosson',
-                date: 'dateme'
+                author: input.author,
+                date: formattedDate
             }
         );
     };
@@ -72,8 +114,8 @@ module.exports = class extends Generator {
             this.templatePath('bin/build-docker'),
             this.destinationPath('bin/build-docker'),
             {
-                author: 'Eric Crosson',
-                date: 'dateme'
+                author: input.author,
+                date: formattedDate
             }
         );
     };
@@ -82,9 +124,11 @@ module.exports = class extends Generator {
             this.templatePath('tasks/main.yml'),
             this.destinationPath('tasks/main.yml'),
             {
-                author: 'Eric Crosson',
-                date: 'dateme'
+                author: input.author,
+                date: formattedDate
             }
         );
     };
+
+
 };

@@ -4,7 +4,6 @@
 
 ## Install
 
-
 ``` {.sourceCode .bash}
 curl -fsSL https://raw.githubusercontent.com/EricCrosson/usable/master/bin/apply | bash -s -- <%= git_repository %>
 ```
