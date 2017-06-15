@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "gh:ericcrosson/ansible-backbone"
+    "url": "gh:ericcrosson/generator-ansible-docker"
   },
   "keywords": [
     "yeoman",
