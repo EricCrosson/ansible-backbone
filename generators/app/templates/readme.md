@@ -1,10 +1,19 @@
-# <%= name %> [TODO: add is-usable badge]
+# <%= name %> [![Usable](https://img.shields.io/badge/is-usable-8e74b2.svg)](https://github.com/ericcrosson/usable)
 
 > <%= tagline %>
 
+## Install
+
+
+``` {.sourceCode .bash}
+curl -fsSL https://raw.githubusercontent.com/EricCrosson/usable/master/bin/apply | bash -s -- <%= git_repository %>
+```
+
 ## Use
 
-TODO: add usable
+``` {.sourceCode .bash}
+./bin/build-docker
+```
 
 ## Options
 

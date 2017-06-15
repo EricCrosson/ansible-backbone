@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+# Written by <%= author %>
+# <%= date %>
+#
+# Build the docker container provided by this project.
+
+set -o nounset
+[ "${CI_SERVER:-}" = "yes" ] && set -x
+
+usage() {
+    cat <<EOF
+
+    Usage: $0 [desktop|embedded|firebird]
+
+EOF
+}
+
+platform="${1:-desktop}"; shift
+case "${platform}" in
+    desktop|embedded|firebird)
+        break
+        ;;
+    *)
+        usage
+        exit 1
+        ;;
+esac
+
+root="$(readlink -f "$(dirname "$0")" | sed -r 's/\/bin.*//')"
+image="$(eval echo "$(cat tag)")"
+version="$(cat "${root}/version")"
+release_date="$(date +%Y-%m-%d:%H:%M)"
+
+cd "${root}" || exit -1
+
+docker build \
+       --build-arg PLATFORM="${platform}" \
+       --build-arg VERSION="${version}" \
+       --build-arg RELEASE_DATE="${release_date}" \
+       -t "${image}:${version}" \
+       .

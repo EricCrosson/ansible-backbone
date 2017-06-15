@@ -1,0 +1,15 @@
+---
+# Master playbook for <%= name %>.
+#
+# Written by <%= author %>
+# <%= date %>
+
+- hosts: localhost
+
+  vars:
+    ansible_connection: local
+    ansible_user: "{{ lookup('env','USER') }}"
+    ansible_python_interpreter: "/usr/bin/env python2"
+
+  roles:
+    - "{{ playbook_dir }}"  # <%= name %>

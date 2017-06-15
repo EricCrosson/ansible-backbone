@@ -1,0 +1,20 @@
+---
+stages:
+  - lint
+  - build
+
+services:
+  - docker:dind
+
+docker_lint:
+  stage: lint
+  image: lukasmartinelli/hadolint
+  script:
+    - hadolint Dockerfile
+
+docker_build:
+  image: docker:latest
+  stage: build
+  script:
+    - bin/build-docker
+    # TODO: validate with goss
