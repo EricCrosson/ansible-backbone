@@ -6,8 +6,7 @@
 
 set -o nounset
 
-# TODO: make this cross-platform (sed flags do not work on macos)
-readonly root="$(readlink -f "$(dirname "$0")" | sed -r 's/\/bin.*//')"
+root="$(dirname "$0")/.."
 pushd "${root}" >/dev/null
 
 ansible-playbook -i localhost, site.yml "$@"
