@@ -1,6 +1,6 @@
 {
   "name": "generator-ansible-docker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Yeoman generator for ansible-maintained docker projects",
   "main": "index.js",
   "scripts": {
